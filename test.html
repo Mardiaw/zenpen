@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<script type="text/javascript">
+    function test(){
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        window.alert(range.toString());
+    }
+</script>
+
+<body>
+        <div>div</div>
+        <span>hahaha</span>
+        <p>pppppp</p>
+        <input type="button" onclick="test()">test</input>
+</body>
+</html>

@@ -4,14 +4,14 @@ var editor = (function() {
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
 
 	// Editor Bubble elements
-	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
+	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput, catchButton;
 
 
 	function init() {
 
 		lastRange = 0;
 		bindElements();
-
+        
 		// Set cursor position
 		var range = document.createRange();
 		var selection = window.getSelection();
@@ -98,6 +98,9 @@ var editor = (function() {
 		urlInput = textOptions.querySelector( '.url-input' );
 		urlInput.onblur = onUrlInputBlur;
 		urlInput.onkeydown = onUrlInputKeyDown;
+
+        catchButton = textOptions.querySelector('.catch');
+        catchButton.onclick = onCatchClick;
 	}
 
 	function checkTextHighlighting( event ) {
@@ -158,8 +161,9 @@ var editor = (function() {
 			boldButton.className = "bold"
 		}
 
-		if ( hasNode( currentNodeList, 'I') ) {
-			italicButton.className = "italic active"
+        if ( hasNode( currentNodeList, 'I') ) {
+
+            italicButton.className = "italic active"
 		} else {
 			italicButton.className = "italic"
 		}
@@ -249,6 +253,24 @@ var editor = (function() {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
 	}
+
+    function onCatchClick()
+    {
+        var selection = window.getSelection();
+        if(selection.anchorNode.isEqualNode(selection.focusNode))
+        {
+            document.execCommand('hiliteColor', false,"#FF0303");
+            selection = window.getSelection();
+            selection.anchorNode.parentNode.setAttribute("contenteditable","false");
+        }
+        else{
+            //debug
+            window.alert("select across multiple");
+
+        }
+
+
+    }
 
 	function onUrlClick() {
 
